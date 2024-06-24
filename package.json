@@ -2,12 +2,30 @@
   "name": "mapboxRNv71",
   "version": "0.0.1",
   "private": true,
+  "watch": {
+    "reload": {
+      "patterns": [
+          "index.js",
+          "src",
+          "App.tsx",
+          "devtools"
+      ],
+      "extensions": [
+          "js",
+          "ts",
+          "tsx",
+          "json"
+      ]
+  }
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "watch": "npm-watch",
+    "reload": "sh syncReactNative.sh"
   },
   "dependencies": {
     "react": "18.2.0",
