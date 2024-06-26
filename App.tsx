@@ -69,8 +69,25 @@ function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <Section title="Step One">
-        Edit <Text style={styles.highlight}>App.tsx</Text> to change this screen
-        and then come back to see your edits.
+        Edit<Text style={styles.highlight}>App.tssssx</Text>
+      </Section>
+      <Section title="Step One">
+        Edit<Text style={styles.highlight}>App.tssssx</Text>
+      </Section>
+      <Section title="Step One">
+        Edit<Text style={styles.highlight}>App.tssssx</Text>
+      </Section>
+      <Section title="Step One">
+        Edit<Text style={styles.highlight}>App.tssssx</Text>
+      </Section>
+      <Section title="Step One">
+        Edit<Text style={styles.highlight}>App.tssssx</Text>
+      </Section>
+      <Section title="Step One">
+        Edit<Text style={styles.highlight}>App.tssssx</Text>
+      </Section>
+      <Section title="Step One">
+        Edit<Text style={styles.highlight}>App.tssssx</Text>
       </Section>
     </SafeAreaView>
   );
