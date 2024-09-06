@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -19,8 +19,34 @@ import {
 
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 import {NativeModules} from 'react-native';
+// {
+//   "type": "FeatureCollection",
+//   "name": "GeoJsonData",
+//   "features": [
+//     {
+//       "type": "Feature",
+//       "properties": {
+//         "description": null,
+//       },
+//       "geometry": {
+//         "type": "MultiPolygon",
+//         "coordinates": [
+//           [
+//             [
+//               [46.6973896223821, 24.7938909593501],
+//               [46.69730684623009, 24.79405349682493],
+//               [46.69722194475514, 24.79401653642232],
+//               [46.69730416732871, 24.79385517629931],
+//               [46.6973896223821, 24.7938909593501]
+//             ]
+//           ]
+//         ]
+//       }
+//     },
+// }
 function InProgress(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [polygons, setPolygons] = useState<any>();
   const getData = async () => {
     console.log(NativeModules);
     const HobexModule = NativeModules.RNSiteModule;
@@ -28,7 +54,18 @@ function InProgress(): JSX.Element {
     const data = await HobexModule.getSiteDetails(
       '"statusTitle":"In-Progress"',
     );
-    console.log('db Data', data);
+    const polygons = Object.keys(data).map(shapeObjects => {
+      const shapeData = data[shapeObjects];
+      return {
+        type: 'Feature',
+        properties: {
+          description: null,
+        },
+        geometry: shapeData.shape,
+      };
+    });
+    await setPolygons(polygons);
+    console.log('db Data1', JSON.stringify(polygons));
   };
 
   useEffect(() => {
