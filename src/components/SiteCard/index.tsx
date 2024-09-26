@@ -61,10 +61,11 @@ const SiteCard: FC<TSiteData & {navigation?: any}> = props => {
   }, [centroid, currentUserLocation]);
 
   const gotoSiteMap = () => {
-    navigation.navigate('SiteMap', {
-      siteName: siteName,
-      siteId: id,
-    });
+    navigation &&
+      navigation.navigate('SiteMap', {
+        siteName: siteName,
+        siteId: id,
+      });
   };
 
   return (

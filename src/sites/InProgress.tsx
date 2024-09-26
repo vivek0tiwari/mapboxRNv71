@@ -45,6 +45,7 @@ export type TSiteData = {
   sitePostCode: string;
   siteRegion: string;
   shape: GeoJSON.Polygon;
+  habitatShapes: GeoJSON.Feature[];
   centroid: GeoJSON.Point;
   groundSurveyStatus: {code: SiteStatusEnum; label: string};
   geometryMetric: {
