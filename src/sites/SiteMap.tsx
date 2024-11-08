@@ -16,6 +16,7 @@ import {
   bbox as turfBbox,
   featureCollection as turfFeatureCollection,
 } from '@turf/turf';
+import aidImages from './patternsMapping';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoiYWlkYXNoLWl2bXMiLCJhIjoiY2s5MmFoaXZkMDJqaTN0b3R0MXp2ZW9vaCJ9.vHhKgvClj48SJpFwjSdgug',
@@ -36,11 +37,11 @@ const SiteMap = () => {
     );
     const habitatList = habitaData.data.map(habitatDetail => {
       const habitatData = JSON.parse(habitatDetail.response);
-      return habitatData.shape;
+      return {...habitatData.shape, aidashCode: habitatDetail.aidashCode};
     });
 
     // setSiteData(habitatList);
-    console.log('siteHabitatData', habitatList);
+    console.log('siteHabitatData', habitatList, habitaData);
     if (typeof data === 'object' && route.params?.siteId) {
       const siteInfo = data[route.params.siteId] as TSiteData;
       siteInfo.habitatShapes = habitatList;
@@ -65,7 +66,7 @@ const SiteMap = () => {
       return turfFeatureCollection(
         siteData.habitatShapes
           .filter(_ftr => _ftr.type === 'Polygon')
-          .map(ftr => feature(ftr)),
+          .map(ftr => feature(ftr, {aidashCode: ftr.aidashCode})),
       );
     }
     return turfFeatureCollection([]);
@@ -99,6 +100,8 @@ const SiteMap = () => {
     setSelectedFeature(_feature);
   };
 
+  console.log('polygonfeatureCollection', polygonfeatureCollection, siteData);
+
   const SelectedPolygon = () =>
     selectedFeature ? (
       <Mapbox.ShapeSource
@@ -108,7 +111,7 @@ const SiteMap = () => {
           sourceID="selectedNYC"
           id="nycSelectedFillRed"
           style={{
-            fillColor: 'red',
+            fillColor: 'green',
           }}
         />
         <Mapbox.LineLayer
@@ -125,6 +128,11 @@ const SiteMap = () => {
     return (
       <ScrollView contentContainerStyle={styles.page}>
         <Mapbox.MapView style={styles.map}>
+          <Mapbox.Images
+            images={{
+              ...aidImages,
+            }}
+          />
           <Mapbox.Camera
             defaultSettings={{
               zoomLevel: 15,
@@ -139,7 +147,8 @@ const SiteMap = () => {
             <Mapbox.FillLayer
               id="siteBoundaryLayer"
               style={{
-                fillColor: '#e153537c',
+                fillPattern: ['get', 'aidashCode'],
+                // fillColor: '#e153537c',
               }}
             />
             <Mapbox.LineLayer
